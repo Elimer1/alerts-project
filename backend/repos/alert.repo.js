@@ -11,3 +11,11 @@ export const getAlertsRepo = async () => {
 export const getAlertByIdRepo = async (id) => {
   return await Alert.findById(id);
 };
+
+export const deleteAlertRepo = async (_id) => {
+  return await Alert.deleteOne({ _id });
+};
+
+export const updateAlertRepo = async (id, data) => {
+  return await Alert.findByIdAndUpdate(id, data, { new: true });
+};

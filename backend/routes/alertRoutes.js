@@ -1,9 +1,11 @@
 import { Router } from "express";
-import { ZALert } from "../validation/alert.validation.js";
+import { ZALert, ZALertUpdate } from "../validation/alert.validation.js";
 import {
   createAlertService,
+  deleteAlertService,
   getAlertByIdService,
   getAlertService,
+  updateAlertService,
 } from "../services/alert.service.js";
 import { number } from "zod";
 
@@ -37,6 +39,29 @@ router.get("/:id", async (req, res, next) => {
     const alert = await getAlertByIdService(alertId);
     console.log(alert);
     return res.status(200).json({ success: true, data: alert });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.delete("/:id", async (req, res, next) => {
+  try {
+    const alertId = String(req.params.id);
+    const result = await deleteAlertService(alertId);
+    res
+      .status(200)
+      .json({ success: true, message: "alert deleted successfully" });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put("/:id", async (req, res, next) => {
+  try {
+    const alertId = String(req.params.id);
+    const data = ZALertUpdate.parse(req.body);
+    const result = await updateAlertService(alertId, data);
+    res.status(200).json({ result });
   } catch (error) {
     next(error);
   }
