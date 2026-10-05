@@ -2,8 +2,10 @@ import { Router } from "express";
 import { ZALert } from "../validation/alert.validation.js";
 import {
   createAlertService,
+  getAlertByIdService,
   getAlertService,
 } from "../services/alert.service.js";
+import { number } from "zod";
 
 const router = Router();
 
@@ -29,4 +31,14 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+router.get("/:id", async (req, res, next) => {
+  try {
+    const alertId = String(req.params.id);
+    const alert = await getAlertByIdService(alertId);
+    console.log(alert);
+    return res.status(200).json({ success: true, data: alert });
+  } catch (error) {
+    next(error);
+  }
+});
 export default router;
