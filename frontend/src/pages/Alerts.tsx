@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import UpdateAlert from "./UpdateAlert";
 import { useNavigate } from "react-router-dom";
-import AddAlert from "./AddAlert";
 
 export type Alert = {
   _id: string;
@@ -22,7 +21,6 @@ const Alerts = () => {
   const [showAdd, setShowAdd] = useState<boolean>(false);
   const [editId, setEditId] = useState<String>("");
   const navigate = useNavigate();
-  A;
 
   useEffect(() => {
     const getAlerts = async () => {
@@ -58,9 +56,9 @@ const Alerts = () => {
     <>
       {loading && <div>Loading...</div>}
       {error && <div>Error: {error}</div>}
-      {showAdd && <AddAlert />}
+      {/* {showAdd && <AddAlert />}
       {!showAdd && <button onClick={() => setShowAdd(true)}>+Add Alert</button>}
-      {editId && <UpdateAlert id={editId} />}
+      {editId && <UpdateAlert id={editId} />} */}
       <ul>
         {alerts.map((alert: Alert) => (
           <li key={alert._id}>
