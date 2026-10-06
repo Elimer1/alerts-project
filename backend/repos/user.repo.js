@@ -7,3 +7,11 @@ export const createUserRepo = async (user) => {
 export const getUserRepo = async (userData) => {
   return await User.findOne(userData);
 };
+
+export const getAllUsersRepo = async () => {
+  return await User.find({});
+};
+
+export const deleteUserRepo = async (id) => {
+  return await User.findByIdAndDelete(id);
+};

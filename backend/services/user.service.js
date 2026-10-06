@@ -1,6 +1,11 @@
-import { createUserRepo, getUserRepo } from "../repos/user.repo.js";
+import {
+  createUserRepo,
+  deleteUserRepo,
+  getAllUsersRepo,
+  getUserRepo,
+} from "../repos/user.repo.js";
 import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
+import * as bcrypt from "bcrypt";
 
 export const createUserService = async (user) => {
   const { password, email } = user;
@@ -17,7 +22,36 @@ export const createUserService = async (user) => {
   return jwt.sign({ id: _id, username, role }, process.env.JWT_SECRET);
 };
 
-export const loginUser = async (loginCreds) => {
-  const { email, password } = loginCreds;
-  const user = getUserRepo();
+export const loginUserService = async (loginCreds) => {
+  const { email: loginEmail, password: loginPswd } = loginCreds;
+  const user = await getUserRepo({ email: loginEmail });
+  if (!user) {
+    const error = new Error("username or password is incorrect");
+    error.status(401);
+    throw error;
+  }
+  const { _id, username, role, password } = user;
+
+  const loggedIn = await bcrypt.compare(loginPswd, password);
+
+  if (loggedIn) {
+    return jwt.sign({ id: _id, username, role }, process.env.JWT_SECRET);
+  }
+  const error = new Error("username or passowrd is incorrect");
+  error.status(401);
+  throw error;
+};
+
+export const getAllUsersService = async () => {
+  return await getAllUsersRepo();
+};
+
+export const deleteUserService = async (id) => {
+  const deleted = await deleteUserRepo(id);
+  if (!deleted) {
+    const error = new Error("user to be deleted not found");
+    error.status = 404;
+    throw error;
+  }
+  return;
 };
