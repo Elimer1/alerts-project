@@ -26,12 +26,13 @@ export const getAlertByIdService = async (id) => {
 };
 
 export const deleteAlertService = async (id) => {
+  console.log(id);
   const result = await deleteAlertRepo(id);
-  if (!result.deletedCount) {
-    const error = new Error("task to be deleted not found");
-    error.status = 404;
-    throw error;
-  }
+  //   if (!result.deletedCount) {
+  //     const error = new Error("task to be deleted not found");
+  //     error.status = 404;
+  //     throw error;
+  //   }
   return result;
 };
 

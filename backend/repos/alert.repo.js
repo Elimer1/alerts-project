@@ -12,8 +12,8 @@ export const getAlertByIdRepo = async (id) => {
   return await Alert.findById(id);
 };
 
-export const deleteAlertRepo = async (_id) => {
-  return await Alert.deleteOne({ _id });
+export const deleteAlertRepo = async (id) => {
+  return await Alert.findByIdAndDelete(id);
 };
 
 export const updateAlertRepo = async (id, data) => {

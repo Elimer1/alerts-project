@@ -7,12 +7,12 @@ import {
   getAlertService,
   updateAlertService,
 } from "../services/alert.service.js";
-import { number } from "zod";
 
 const router = Router();
 
 router.post("/", async (req, res, next) => {
   try {
+    console.log(req.body);
     const alert = ZALert.parse(req.body);
     const result = await createAlertService(alert);
     console.log(alert);

@@ -7,3 +7,8 @@ export const ZUSer = z.object({
   role: z.string(),
   assignedArena: z.string(),
 });
+
+export const ZUSerLogin = z.object({
+  username: z.string(),
+  password: z.string(),
+});

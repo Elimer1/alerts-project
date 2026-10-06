@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 
 const authUser = (req, res, next) => {
   const authHeader = req.headers.authorization;
+  console.log(authHeader);
   if (!authHeader) {
     return res.status(401).json({ message: "Authorization header missing" });
   }
@@ -13,7 +14,7 @@ const authUser = (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
 
     next();
@@ -21,3 +22,5 @@ const authUser = (req, res, next) => {
     return res.status(403).json({ message: "Invalid or expired token" });
   }
 };
+
+export default authUser;
