@@ -1,10 +1,17 @@
 import axios from "axios";
 import { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import AdminPage from "./AdminPage";
+//import { useUserStore } from "../useHooks/useUserStore.js";
 
 const Register = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
-  const token = "slslknklsvns";
+  //const token = useUserStore((state) => state.token);
+  //const setToken = useUserStore((state) => state.setToken);
+  //const setRole = useUserStore((state) => state.setRole);
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
   const handleRegister = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -12,12 +19,18 @@ const Register = () => {
     try {
       setLoading(true);
       setError("");
-      const res = axios.post(
+      const res = await axios.post(
         "http://localhost:3001/api/auth/register",
-        { formData },
+        {
+          username: String(formData.get("username")),
+          email: String(formData.get("email")),
+          password: String(formData.get("username")),
+          role: String(formData.get("role")),
+          assignedArena: String(formData.get("assignedArena")),
+        },
         {
           headers: {
-            Authorization: "Bearer" + token,
+            Authorization: "Bearer " + token,
           },
         },
       );
@@ -28,6 +41,14 @@ const Register = () => {
       //go to me page ?
     }
   };
+
+  const handleLogout = () => {
+    localStorage.setItem("token", "");
+    localStorage.setItem("username", "");
+    localStorage.setItem("role", "");
+    navigate("/");
+  };
+
   return (
     <>
       <div className="register-page">
@@ -87,17 +108,25 @@ const Register = () => {
               name="assignedArena"
               id="assignedArena"
             >
-              <option value="north">North</option>
-              <option value="south">South</option>
-              <option value="center">Center</option>
+              <option value="North">North</option>
+              <option value="South">South</option>
+              <option value="Center">Center</option>
             </select>
           </div>
 
           <button className="regsiter-submit-btn" type="submit">
-            {loading ? "Regsitering..." : "Register"}
+            {loading ? "Registering..." : "Register User"}
           </button>
           {error && <div>Error: {error}</div>}
         </form>
+
+        <div className="admin-options">
+          <button onClick={handleLogout} className="logout-btn">
+            {loading ? "logging out" : "Log Out"}
+          </button>
+
+          <NavLink to={"/users/admin-page"}>Go to admin page</NavLink>
+        </div>
       </div>
     </>
   );

@@ -3,6 +3,16 @@
   list-style: none;
 }
 
+.not-found {
+  font-size: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  margin: 0;
+}
+
 .register-page {
   display: flex;
   flex-direction: column;
@@ -20,4 +30,48 @@
 .register-input-container {
   display: flex;
   gap: 10px;
+}
+
+.login-page {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 60%;
+  align-self: center;
+}
+
+.login-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.protected-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logout-btn {
+  margin-top: 12px;
+}
+
+.admin-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.admin-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

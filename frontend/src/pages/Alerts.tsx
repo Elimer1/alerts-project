@@ -21,6 +21,10 @@ const Alerts = () => {
   const [showAdd, setShowAdd] = useState<boolean>(false);
   const [editId, setEditId] = useState<String>("");
   const navigate = useNavigate();
+  const role = localStorage.getItem("role");
+  const assignedArena = localStorage.getItem("assignedArena");
+
+  const filter = role === "arena_user" ? { assignedArena } : "";
 
   useEffect(() => {
     const getAlerts = async () => {
@@ -29,7 +33,6 @@ const Alerts = () => {
         setError("");
         const res = await axios.get("http://localhost:3001/api/alerts");
         setAlerts(res.data.data);
-        console.log(res.data.data);
       } catch (error) {
         setError(String(error));
         console.log(error);

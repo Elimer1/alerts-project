@@ -10,7 +10,6 @@ import * as bcrypt from "bcrypt";
 export const createUserService = async (user) => {
   const { password, email } = user;
   const isUser = await getUserRepo({ email });
-  console.log(isUser);
   if (isUser) {
     const error = new Error("User with this email already exists");
     error.status = 409;
@@ -18,8 +17,7 @@ export const createUserService = async (user) => {
   }
   const hashedPassword = await bcrypt.hash(password, 10);
   user.password = hashedPassword;
-  const { _id, username, role } = await createUserRepo(user);
-  return jwt.sign({ id: _id, username, role }, process.env.JWT_SECRET);
+  return await createUserRepo(user);
 };
 
 export const loginUserService = async (loginCreds) => {
@@ -27,7 +25,7 @@ export const loginUserService = async (loginCreds) => {
   const user = await getUserRepo({ email: loginEmail });
   if (!user) {
     const error = new Error("username or password is incorrect");
-    error.status(401);
+    error.status = 401;
     throw error;
   }
   const { _id, username, role, password } = user;

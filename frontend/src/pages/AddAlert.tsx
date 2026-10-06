@@ -8,16 +8,15 @@ const AddAlert = () => {
   const handleAddAlert = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    console.log(formData);
     try {
       setLoading(true);
       setError("");
       const res = await axios.post("http://localhost:3001/api/alerts", {
-        displayName: formData.get("displayName"),
-        description: formData.get("description"),
-        priority: formData.get("priority"),
-        arena: formData.get("arena"),
-        status: formData.get("status"),
+        displayName: String(formData.get("displayName")),
+        description: String(formData.get("description")),
+        priority: String(formData.get("priority")),
+        arena: String(formData.get("arena")),
+        status: String(formData.get("status")),
         lon: Number(formData.get("lon")),
         lat: Number(formData.get("lat")),
       });

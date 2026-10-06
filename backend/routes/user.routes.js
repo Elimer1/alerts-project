@@ -55,6 +55,7 @@ router.get("/users", authUser, async (req, res, next) => {
 
 router.delete("/users/:id", authUser, async (req, res, next) => {
   const role = req.user.role;
+  console.log(role);
   if (role !== "admin") {
     return res.status(403).json({ message: "Not authorized to delete users" });
   }

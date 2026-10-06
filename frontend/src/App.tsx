@@ -4,6 +4,10 @@ import "./App.css";
 import AddAlert from "./pages/AddAlert";
 import UpdateAlert from "./pages/UpdateAlert";
 import Register from "./pages/Register";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Login from "./pages/Login";
+import NotFound from "./pages/NotFound";
+import AdminPage from "./pages/AdminPage";
 
 const App = () => {
   return (
@@ -11,7 +15,12 @@ const App = () => {
       <Routes>
         <Route path="/alerts" element={<Alerts />} />
         <Route path="/alerts/add" element={<AddAlert />} />
-        <Route path="users/register" element={<Register />} />
+        <Route path="/" element={<Login />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="users/register" element={<Register />} />
+          <Route path="users/admin-page" element={<AdminPage />} />
+        </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
